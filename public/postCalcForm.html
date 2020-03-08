@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostCalc Form</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets//styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function setMax() {
+            var type = document.getElementById("type");
+            var selectedType = type.options[type.selectedIndex].value;
+            var weight = document.getElementById("weight");
+            $(weight).prop("disabled", false);
+
+            var max = 0;
+            if (selectedType == "stamp" || selectedType == "meter") {
+                max = 3.5;
+            }
+            else if (selectedType == "flat" || selectedType == "retail") {
+                max = 13;
+            }
+            $("#weight").attr({
+                "max": max
+            });
+        }
+    </script>
+</head>
+<body>
+    <form action="/postCalcRate" method="GET">
+        <span>Select mail type:</span>
+        <select id="type" name="type" onchange="setMax()">
+            <option value="" selected disabled>--select type--</option>
+            <option value="stamp">Letter (stamped)</option>
+            <option value="meter">Letter (metered)</option>
+            <option value="flat">Large envelope (flat)</option>
+            <option value="retail">First Class Package (retail)</option>
+        </select>
+        <br/>
+        Enter mail weight: <input id="weight" type="number" step="any" name="weight" disabled>
+        <br/>
+        <button id="submit" type="submit" value="calc">Calculate</button>
+    </form>
+</body>
+</html>
