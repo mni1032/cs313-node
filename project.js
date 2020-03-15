@@ -24,7 +24,7 @@ function loadBooks(req, res) {
         }
         books.concat("</select>")
         res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(books);
+        res.write(result.rows.length);
         res.end();        
         // var params = {books: books};
         // res.render('/pages/school', params);
