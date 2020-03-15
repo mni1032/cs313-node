@@ -17,14 +17,14 @@ function loadBooks(req, res) {
             res.end();
         }
     
-        var books = "<select id='book'>";
+        var books = " select id='book' ";
         var i;
         for (i = 0; i < result.rows.length; i++) {
-            books.concat("<option value=", result.rows[i].book, ">", result.rows[i].book, "</option>");
+            books.concat(" option value=", result.rows[i].book, " ", result.rows[i].book, " /option ");
         }
-        books.concat("</select>")
+        books.concat(" /select ")
         res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(String(Number(result.rows.length)));
+        res.write(books);
         res.end();        
         // var params = {books: books};
         // res.render('/pages/school', params);
