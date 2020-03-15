@@ -16,11 +16,11 @@ function loadBooks(req, res) {
             res.write("ERROR IN QUERY");
             res.end();
         }
-
+    
         var books = "<select id='book'>";
         var i;
         for (i = 0; i < result.rows.length; i++) {
-            books.concat("<option value='", result.rows[i].book, "' >", result.rows[i].book, "</option>");
+            books.concat("<option value=", result.rows[i].book, ">", result.rows[i].book, "</option>");
         }
         books.concat("</select>")
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -28,6 +28,8 @@ function loadBooks(req, res) {
         res.end();        
         // var params = {books: books};
         // res.render('/pages/school', params);
+
+    
     });     
 }
 
