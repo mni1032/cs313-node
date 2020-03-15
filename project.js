@@ -22,12 +22,9 @@ function loadBooks(req, res) {
         for (i = 0; i < result.rows.length; i++) {
             books = books + "<option value=" + result.rows[i].book + ">" + result.rows[i].book + "</option>";
         }
-        books += "</select>";
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(books);
-        res.end();        
-        // var params = {books: books};
-        // res.render('/pages/school', params);
+        books += "</select>";       
+        var params = {books: books};
+        res.render('/pages/school', params);
 
     
     });     
