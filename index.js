@@ -14,7 +14,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => res.render('pages/index'));
 
 //project routes
-app.get('/school', project.loadBooks)
+app.get('/school', project.loadBooks);
 
 //postal rate calculator routes
 app.get('/postCalcForm', function(req, res) {
