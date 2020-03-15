@@ -18,7 +18,7 @@ function loadBooks(req, res) {
         }
     
         res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(result.rows);
+        res.write(result.rows[0].book);
         res.end();
     
     });     
