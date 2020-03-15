@@ -17,12 +17,12 @@ function loadBooks(req, res) {
             res.end();
         }
     
-        var books = " select id='book' ";
+        var books = "<select id='book'>";
         var i;
         for (i = 0; i < result.rows.length; i++) {
-            books = books + " option value=" + result.rows[i].book + " " + result.rows[i].book + " /option ";
+            books = books + "<option value=" + result.rows[i].book + ">" + result.rows[i].book + "</option>";
         }
-        books += " /select ";
+        books += "</select>";
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.write(books);
         res.end();        
