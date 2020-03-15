@@ -24,7 +24,7 @@ function loadBooks(req, res) {
         }
         books += "</select>";       
         var params = {books: books};
-        res.render('/pages/school', params);
+        res.render('pages/school', params);
 
     
     });     
