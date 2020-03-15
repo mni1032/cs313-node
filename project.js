@@ -11,16 +11,15 @@ function loadBooks(req, res) {
     var sql = "SELECT DISTINCT book FROM verse;";
 
     pool.query(sql, function(err, result) {
-        // If an error occurred...
         if (err) {
-            console.log("Error in query: ")
-            console.log(err);
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
         }
     
-        // Log this to the console for debugging purposes.
-        console.log("Back from DB with result:");
-        console.log(result.rows);
-        res.render("Success!")
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(result.rows);
+        res.end();
     
     });     
 }
