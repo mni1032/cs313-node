@@ -18,3 +18,5 @@ function loadBooks(req, res) {
     
     });     
 }
+
+module.exports = {loadBooks: loadBooks}
