@@ -139,4 +139,14 @@ function loadBooksForComment(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment}
+function insertComment(req, res) {
+    console.log(req.body);
+    res.render('/addComment')
+}
+
+function insertVerse(req, res) {
+    console.log(req.body);
+    res.render('/addVerse')
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse}

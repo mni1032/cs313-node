@@ -23,6 +23,8 @@ app.get('/addVerse', (req, res) => res.render('pages/addVerse'));
 
 app.get('/chapters', (req, res) => project.loadChapters(res, req.query.book));
 app.get('/verses', (req, res) => project.loadVerses(res, req.query.book, req.query.chapter));
+app.post('/insertComment', project.insertComment);
+pp.post('/insertVerse', project.insertVerse);
 
 //postal rate calculator routes
 app.get('/postCalcForm', function(req, res) {
