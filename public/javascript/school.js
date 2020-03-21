@@ -9,9 +9,7 @@ function fillVerses() {
     $('#verse').removeAttr("disabled");
     $.ajax({
         type: "GET",
-        url: "/verses?book=" + book + "&chapter=" + chapter,
-        data: { 'book': selectedBook, 'chapter': selectedChapter },
-        dataType: 'json',
+        url: "/verses?book=" + book + "&chapter=" + selectedChapter,
         success: function(response){
             verses = response.verses;
             $("#verse").append(verses);
