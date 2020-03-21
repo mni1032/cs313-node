@@ -31,7 +31,7 @@ function loadBooks(req, res) {
     });     
 }
 
-function loadChapters(bookURI) {
+function loadChapters(res, bookURI) {
     var book = decodeURIComponent(bookURI);
     console.log(book);
     var pool = connectToDb();
