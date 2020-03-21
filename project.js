@@ -58,6 +58,7 @@ function loadChapters(res, bookURI) {
 function loadVerses(res, bookURI, chapter) {
     var book = decodeURIComponent(bookURI);
     var pool = connectToDb();
+    console.dir(book + "\n" + chapter);
     var sql = "SELECT DISTINCT verse FROM verse WHERE book = $1 AND chapter = $2;";
     pool.query(sql, [book, chapter], function(err, result) {
         if (err) {

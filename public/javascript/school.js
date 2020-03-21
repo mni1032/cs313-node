@@ -1,7 +1,7 @@
 function fillVerses() {
     var bookSelect = document.getElementById("book");
     var selectedBook = bookSelect.options[bookSelect.selectedIndex].value;
-    book = encodeURIComponent(selectedBook);
+    var book = encodeURIComponent(selectedBook);
 
     var chapterSelect = document.getElementById("chapter");
     var selectedChapter = chapterSelect.options[chapterSelect.selectedIndex].value;
@@ -26,7 +26,7 @@ function fillVerses() {
 function fillChapters() {
     var bookSelect = document.getElementById("book");
     var selectedBook = bookSelect.options[bookSelect.selectedIndex].value;
-    book = encodeURIComponent(selectedBook);
+    var book = encodeURIComponent(selectedBook);
 
     $('#chapter').removeAttr("disabled");
     $.ajax({
