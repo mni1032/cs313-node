@@ -141,12 +141,12 @@ function loadBooksForComment(req, res) {
 
 function insertComment(req, res) {
     console.log(req.body);
-    res.render('/school')
+    return res.redirect('/school')
 }
 
 function insertVerse(req, res) {
     console.log(req.body);
-    res.render('/school')
+    return res.redirect('/school')
 }
 
 module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse}
