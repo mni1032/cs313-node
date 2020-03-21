@@ -97,7 +97,7 @@ function loadCommentary(res, bookURI, chapter, verse) {
 
         id = result.rows[0].id;
         text = `<p>${result.rows[0].text}</p>`;
-        verse = `<h1>${book} ${chapter}:${verse}</h1>`;     
+        verse = `<h1>${book}</h1>`;     
     });     
 
     var sql = "SELECT m.username, co.create_date, ci.title, co.text FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id WHERE verse_id = $1;";
