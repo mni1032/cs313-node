@@ -100,7 +100,7 @@ function loadCommentary(res, book, chapter, verse) {
         text = result.rows[0].text;
         verse = `${book} ${chapter}:${verse}`;     
         
-        var sql = "SELECT m.username, co.create_date, ci.title, co.text FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id WHERE verse_id = $1;";
+        var sql = "SELECT m.username, TO_CHAR(co.create_date, 'Month DD, YYYY'), ci.title, co.text FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id WHERE verse_id = $1;";
         pool.query(sql, [Number(id)], function(err, result) {
             if (err) {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
