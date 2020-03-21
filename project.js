@@ -140,13 +140,51 @@ function loadBooksForComment(req, res) {
 }
 
 function insertComment(req, res) {
-    console.log(req.body);
-    return res.redirect('/school')
+    var pool = connectToDb();
+    var sql = "INSERT INTO citation (author_first, author_last, title, other, source_type_id) VALUES ($1, $2, $3, $4, $5) RETURNING id;";
+    pool.query(sql, [req.body.author_first, req.body.author_last, req.body.title, '', req.body.type], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+        var citation_id = result.rows[0].id;
+
+        sql = "SELECT id FROM verse WHERE book = $1 AND chapter = $2 AND verse = $3";
+        pool.query(sql, [req.body.book, Number(req.body.chapter), Number(req.body.verse)], function(err, result) {
+            if (err) {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.write("ERROR IN QUERY");
+                res.end();
+            }
+            var verse_id = result.rows[0].id;
+            sql = "INSERT INTO comment (author_id, create_date, verse_id, citation_id, text) VALUES (1, NOW(), $1, $2, $3);"
+            pool.query(sql, [verse_id, citation_id, req.body.text], function(err, result) {
+                if (err) {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write("ERROR IN QUERY");
+                    res.end();
+                }
+                return res.redirect('/school')
+            });    
+        });
+    });
 }
 
 function insertVerse(req, res) {
-    console.log(req.body);
-    return res.redirect('/school')
+    var pool = connectToDb();
+    var sql = "INSERT INTO verse (author_first, author_last, title, other, source_type_id) VALUES ($1, $2, $3, $4, $5);";
+
+    pool.query(sql, [req.body.author_first, req.body.author_last, req.body.title, '', req.body.type], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+        else {
+            return res.redirect('/school')
+        }
+    });
 }
 
 module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse}
