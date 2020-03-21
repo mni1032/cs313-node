@@ -165,7 +165,7 @@ function insertComment(req, res) {
                     res.write("ERROR IN QUERY");
                     res.end();
                 }
-                return res.redirect('/school')
+                return res.redirect('/addComment')
             });    
         });
     });
@@ -182,7 +182,7 @@ function insertVerse(req, res) {
             res.end();
         }
         else {
-            return res.redirect('/school')
+            return res.redirect('/addVerse')
         }
     });
 }
