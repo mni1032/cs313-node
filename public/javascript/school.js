@@ -2,7 +2,7 @@ function fillChapters() {
     var bookSelect = document.getElementById("book");
     var selectedBook = bookSelect.options[bookSelect.selectedIndex].value;
     book = encodeURIComponent(selectedBook);
-    console.log(book);
+    
     $('#chapter').removeAttr("disabled");
     $.ajax({
         type: "GET",

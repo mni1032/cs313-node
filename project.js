@@ -31,7 +31,9 @@ function loadBooks(req, res) {
     });     
 }
 
-function loadChapters(book) {
+function loadChapters(bookURI) {
+    var book = decodeURIComponent(bookURI);
+    console.log(book);
     var pool = connectToDb();
     var sql = "SELECT DISTINCT chapter FROM verse WHERE book = $book;";
     pool.query(sql, [book], function(err, result) {
