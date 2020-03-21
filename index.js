@@ -18,6 +18,8 @@ app.get('/', (req, res) => res.render('pages/index'));
 //project routes
 app.get('/school', project.loadBooks);
 app.get('/commentary', (req, res) => project.loadCommentary(res, req.query.book, req.query.chapter, req.query.verse));
+app.get('/addComment', res.render('pages/addComment'));
+app.get('/addVerse', res.render('pages/addVerse'));
 
 app.get('/chapters', (req, res) => project.loadChapters(res, req.query.book));
 app.get('/verses', (req, res) => project.loadVerses(res, req.query.book, req.query.chapter));
