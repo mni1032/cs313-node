@@ -81,4 +81,9 @@ function loadVerses(res, bookURI, chapter) {
     });     
 }
 
+function loadCommentary(res, book, chapter, verse) {
+    details = {book: book, chapter: chapter, verse: verse}
+    res.render("pages/commentary", details)
+}
+
 module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses}
