@@ -13,6 +13,7 @@ function fillVerses() {
         data: { 'book': selectedBook, 'chapter': selectedChapter },
         dataType: 'json',
         success: function(response){
+            console.log("Response:\n" + response)
             verses = response.verses;
             $("#verse").append(verses);
         }
