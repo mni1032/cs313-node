@@ -55,4 +55,29 @@ function loadChapters(res, bookURI) {
     });     
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters}
+function loadVerses(res, bookURI, chapter) {
+    var book = decodeURIComponent(bookURI);
+    var pool = connectToDb();
+    var sql = "SELECT DISTINCT verse FROM verse WHERE book = $1 AND chapter = $2;";
+    pool.query(sql, [book, chapter], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+    
+        var verses = "";
+        var i;
+        for (i = 0; i < result.rows.length; i++) {
+            verses = verses + `<option value='${result.rows[i].verse}'>${result.rows[i].verse}</option>`;
+        }     
+
+        verseJson = {verses: verses};
+        var json = JSON.stringify(verseJson)
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(json);
+        res.end();
+    });     
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses}
