@@ -86,6 +86,7 @@ function loadCommentary(res, book, chapter, verse) {
     var commentary = "";
 
     var book = book.replace('+', ' ');
+    console.log(book);
     var pool = connectToDb();
     var sql = "SELECT id, text FROM verse WHERE book = $1 AND chapter = $2 AND verse = $3;";
     pool.query(sql, [book, Number(chapter), Number(verse)], function(err, result) {
