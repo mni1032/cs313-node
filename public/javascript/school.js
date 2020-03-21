@@ -1,5 +1,3 @@
-var project = require('../../project.js');
-
 function fillChapters() {
     var bookSelect = document.getElementById("book");
     var selectedBook = bookSelect.options[bookSelect.selectedIndex].value;
