@@ -60,7 +60,7 @@ function loadVerses(res, bookURI, chapter) {
     var pool = connectToDb();
     console.dir(book + "\n" + chapter);
     var sql = "SELECT DISTINCT verse FROM verse WHERE book = $1 AND chapter = $2;";
-    pool.query(sql, [book, chapter], function(err, result) {
+    pool.query(sql, [book, Number(chapter)], function(err, result) {
         if (err) {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write("ERROR IN QUERY");
@@ -69,15 +69,12 @@ function loadVerses(res, bookURI, chapter) {
     
         var verses = "";
         var i;
-        console.log("Verses:\n")
         for (i = 0; i < result.rows.length; i++) {
-            console.log(i + ": " + result.rows[i].verse)
             verses = verses + `<option value='${result.rows[i].verse}'>${result.rows[i].verse}</option>`;
         }     
 
         verseJson = {verses: verses};
         var json = JSON.stringify(verseJson)
-        console.log("JSON:\n" + json);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.write(json);
         res.end();
