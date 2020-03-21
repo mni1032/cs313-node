@@ -86,4 +86,4 @@ function loadCommentary(res, book, chapter, verse) {
     res.render("pages/commentary", details)
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses}
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary}
