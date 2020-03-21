@@ -15,6 +15,7 @@ app.get('/', (req, res) => res.render('pages/index'));
 
 //project routes
 app.get('/school', project.loadBooks);
+app.get('/chapters', (req, res) => project.loadChapters(req.query.book));
 
 //postal rate calculator routes
 app.get('/postCalcForm', function(req, res) {

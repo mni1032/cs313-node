@@ -17,7 +17,7 @@ function loadBooks(req, res) {
             res.end();
         }
     
-        var books = "<select id='book'>";
+        var books = "<select id='book'><option value='' selected disabled>--select book--</option>";
         var i;
         for (i = 0; i < result.rows.length; i++) {
             books = books + "<option value=" + result.rows[i].book + ">" + result.rows[i].book + "</option>";
@@ -27,6 +27,31 @@ function loadBooks(req, res) {
         res.render('pages/school', params);
 
     
+    });     
+}
+
+function loadChapters(book) {
+    var pool = connectToDb();
+    var sql = "SELECT DISTINCT chapter FROM verse WHERE book = $book;";
+    pool.query(sql, [book], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+    
+        var chapters = "";
+        var i;
+        for (i = 0; i < result.rows.length; i++) {
+            chapters = chapters + "<option value=" + result.rows[i].chapter + ">" + result.rows[i].chapter + "</option>";
+        }     
+
+        chapterJson = {chapters: chapters};
+        var json = JSON.stringify(chapterJson)
+        console.log(json);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(json);
+        res.end();
     });     
 }
 
