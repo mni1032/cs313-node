@@ -1,4 +1,4 @@
-var project = require('../project.js');
+var project = require('../../project.js');
 
 function fillChapters() {
     var bookSelect = document.getElementById("book");
