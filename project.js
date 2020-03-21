@@ -175,7 +175,7 @@ function insertVerse(req, res) {
     var pool = connectToDb();
     var sql = "INSERT INTO verse (book, chapter, verse, text) VALUES ($1, $2, $3, $4);";
 
-    pool.query(sql, [req.body.book, Number(req,body.chapter), Number(req.body.verse), req.body.text], function(err, result) {
+    pool.query(sql, [req.body.book, Number(req.body.chapter), Number(req.body.verse), req.body.text], function(err, result) {
         if (err) {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write("ERROR IN QUERY");
