@@ -17,8 +17,7 @@ app.get('/', (req, res) => res.render('pages/index'));
 
 //project routes
 app.get('/school', project.loadBooks);
-app.post('/commentary', (req, res) => console.log(req.body));
-// project.loadCommentary(res, req.body.book, req.body.chapter, req.body.verse)
+app.post('/commentary', (req, res) => project.loadCommentary(res, req.query.book, req.query.chapter, req.query.verse));
 
 app.get('/chapters', (req, res) => project.loadChapters(res, req.query.book));
 app.get('/verses', (req, res) => project.loadVerses(res, req.query.book, req.query.chapter));
