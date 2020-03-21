@@ -118,4 +118,25 @@ function loadCommentary(res, book, chapter, verse) {
     });     
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary}
+function loadBooksForComment(req, res) {
+    var pool = connectToDb();
+    var sql = "SELECT DISTINCT book FROM verse;";
+
+    pool.query(sql, function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+    
+        var books = "";
+        var i;
+        for (i = 0; i < result.rows.length; i++) {
+            books = books + `<option value='${result.rows[i].book}'>${result.rows[i].book}</option>`;
+        }      
+        var params = {books: books};
+        res.render('pages/addComment', params);
+    });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment}
