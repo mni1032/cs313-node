@@ -20,7 +20,6 @@ function loadBooks(req, res) {
         var books = "<select id='book'><option value='' selected disabled>--select book--</option>";
         var i;
         for (i = 0; i < result.rows.length; i++) {
-            console.log(result.rows[i]);
             books = books + `<option value='${result.rows[i].book}'>${result.rows[i].book}</option>`;
         }
         books += "</select>";       
@@ -33,9 +32,8 @@ function loadBooks(req, res) {
 
 function loadChapters(res, bookURI) {
     var book = decodeURIComponent(bookURI);
-    console.log(book);
     var pool = connectToDb();
-    var sql = "SELECT DISTINCT chapter FROM verse WHERE book = $book;";
+    var sql = "SELECT DISTINCT chapter FROM verse WHERE book = $1;";
     pool.query(sql, [book], function(err, result) {
         if (err) {
             res.writeHead(200, { 'Content-Type': 'text/html' });
