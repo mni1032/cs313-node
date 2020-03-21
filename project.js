@@ -79,28 +79,18 @@ function loadVerses(res, bookURI, chapter) {
     });     
 }
 
-function loadCommentary(res, book, chapter, verse) {
-    var id;
-    var text;
-    var verse;
-    var commentary = "";
+function doCommentaryQuery(err, result) {
+    if (err) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write("ERROR IN QUERY");
+        res.end();
+    }
 
-    var book = book.replace('+', ' ');
-    console.log(book);
+    id = result.rows[0].id;
+    text = result.rows[0].text;
+    verse = `${book} ${chapter}:${verse}`;  
+    
     var pool = connectToDb();
-    var sql = "SELECT id, text FROM verse WHERE book = $1 AND chapter = $2 AND verse = $3;";
-    pool.query(sql, [book, Number(chapter), Number(verse)], function(err, result) {
-        if (err) {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write("ERROR IN QUERY");
-            res.end();
-        }
-
-        id = result.rows[0].id;
-        text = result.rows[0].text;
-        verse = `${book} ${chapter}:${verse}`;     
-    });     
-
     var sql = "SELECT m.username, co.create_date, ci.title, co.text FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id WHERE verse_id = $1;";
     pool.query(sql, [Number(id)], function(err, result) {
         if (err) {
@@ -112,11 +102,23 @@ function loadCommentary(res, book, chapter, verse) {
         var i;
         for (i = 0; i < result.rows.length; i++) {
             commentary += `<p>${result.rows[i].text} (${result.rows[i].title})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].create_date}</p>`
-        }     
+        }    
+        details = {verse: verse, text: text, commentary: commentary}
+        res.render("pages/commentary", details) 
     });   
+}
 
-    details = {verse: verse, text: text, commentary: commentary}
-    res.render("pages/commentary", details)
+function loadCommentary(res, book, chapter, verse) {
+    var id;
+    var text;
+    var verse;
+    var commentary = "";
+
+    var book = book.replace('+', ' ');
+    console.log(book);
+    var pool = connectToDb();
+    var sql = "SELECT id, text FROM verse WHERE book = $1 AND chapter = $2 AND verse = $3;";
+    pool.query(sql, [book, Number(chapter), Number(verse)], doCommentaryQuery);     
 }
 
 module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary}
