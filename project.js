@@ -79,13 +79,13 @@ function loadVerses(res, bookURI, chapter) {
     });     
 }
 
-function loadCommentary(res, bookURI, chapter, verse) {
+function loadCommentary(res, book, chapter, verse) {
     var id;
     var text;
     var verse;
-    var commentary;
+    var commentary = "";
 
-    var book = decodeURIComponent(bookURI);
+    var book = book.replace('+', ' ');
     var pool = connectToDb();
     var sql = "SELECT id, text FROM verse WHERE book = $1 AND chapter = $2 AND verse = $3;";
     pool.query(sql, [book, Number(chapter), Number(verse)], function(err, result) {
@@ -96,7 +96,7 @@ function loadCommentary(res, bookURI, chapter, verse) {
         }
 
         id = result.rows[0].id;
-        text = `<p>${result.rows[0].text}</p>`;
+        text = result.rows[0].text;
         verse = `${book} ${chapter}:${verse}`;     
     });     
 
