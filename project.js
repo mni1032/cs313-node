@@ -44,12 +44,11 @@ function loadChapters(res, bookURI) {
         var chapters = "";
         var i;
         for (i = 0; i < result.rows.length; i++) {
-            chapters = chapters + "<option value=" + result.rows[i].chapter + ">" + result.rows[i].chapter + "</option>";
+            chapters = chapters + `<option value='${result.rows[i].chapter}'>${result.rows[i].chapter}</option>`;
         }     
 
         chapterJson = {chapters: chapters};
         var json = JSON.stringify(chapterJson)
-        console.log(json);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.write(json);
         res.end();
