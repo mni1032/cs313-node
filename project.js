@@ -20,7 +20,7 @@ function loadBooks(req, res) {
         var books = "<select id='book'><option value='' selected disabled>--select book--</option>";
         var i;
         for (i = 0; i < result.rows.length; i++) {
-            books = books + "<option value=" + result.rows[i].book + ">" + result.rows[i].book + "</option>";
+            books = books + `<option value=${result.rows[i].book}>${result.rows[i].book}</option>`;
         }
         books += "</select>";       
         var params = {books: books};
