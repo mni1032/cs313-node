@@ -58,4 +58,4 @@ function loadChapters(bookURI) {
     });     
 }
 
-module.exports = {loadBooks: loadBooks}
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters}
