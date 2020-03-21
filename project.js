@@ -17,12 +17,11 @@ function loadBooks(req, res) {
             res.end();
         }
     
-        var books = "<select id='book'><option value='' selected disabled>--select book--</option>";
+        var books = "";
         var i;
         for (i = 0; i < result.rows.length; i++) {
             books = books + `<option value='${result.rows[i].book}'>${result.rows[i].book}</option>`;
-        }
-        books += "</select>";       
+        }      
         var params = {books: books};
         res.render('pages/school', params);
 
@@ -58,7 +57,6 @@ function loadChapters(res, bookURI) {
 function loadVerses(res, bookURI, chapter) {
     var book = decodeURIComponent(bookURI);
     var pool = connectToDb();
-    console.dir(book + "\n" + chapter);
     var sql = "SELECT DISTINCT verse FROM verse WHERE book = $1 AND chapter = $2;";
     pool.query(sql, [book, Number(chapter)], function(err, result) {
         if (err) {
