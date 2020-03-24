@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
+const session = require('express-session');
 
 var project = require('./project.js');
 var postCalc = require('./postCalc.js');
@@ -32,7 +33,8 @@ app.get('/postCalcForm', function(req, res) {
 });
 app.get('/postCalcRate', postCalc.calcRate);
 
-
+/* Team 12 */
+app.use(session({???}));
 app.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -48,5 +50,7 @@ app.post('/logout', function(req, res) {
 
 });
 app.get('/getServerTime');
+
+/* End Team 12 */
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
