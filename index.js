@@ -8,8 +8,8 @@ var postCalc = require('./postCalc.js');
 var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.json());
+app.use(express.urlencoded());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -32,5 +32,21 @@ app.get('/postCalcForm', function(req, res) {
 });
 app.get('/postCalcRate', postCalc.calcRate);
 
+
+app.post('/login', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  console.log(username);
+  console.log(password);
+});
+
+app.post('/logout', function(req, res) {
+  if (req.session) {
+    
+  }
+
+});
+app.get('/getServerTime');
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
