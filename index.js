@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const Pool = require('pg-pool');
 const PORT = process.env.PORT || 5000;
 const session = require('express-session');
 
@@ -72,12 +73,12 @@ app.post('/login', function(req, res) {
   var sql = 'SELECT id FROM member WHERE username = $1 AND password = $2';
   pool.query(sql, params, function(err, result) {
     if (err) {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write("ERROR IN QUERY");
-        res.end();
+      console.log("in the error for pool");
+      res.status(500).json({success: false, data: err});
     }
 
     id = result.rows[0].id;
+    console.log("id: " + id);
     var json = {success: false};
     if (id != null) {
       json.success = true; 
