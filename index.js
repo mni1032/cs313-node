@@ -34,7 +34,7 @@ app.get('/postCalcForm', function(req, res) {
 app.get('/postCalcRate', postCalc.calcRate);
 
 /* Team 12 */
-app.use(session({???}));
+// app.use(session({???}));
 app.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
