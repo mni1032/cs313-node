@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-// const session = require('express-session');
+const session = require('express-session');
 
 var project = require('./project.js');
 var postCalc = require('./postCalc.js');
@@ -39,8 +39,11 @@ app.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  console.log(username);
-  console.log(password);
+  var json = {success: false};
+  if (username == 'admin' && password == 'password') {
+    json.success = true; 
+  }
+  res.json(json);
 });
 
 app.post('/logout', function(req, res) {
@@ -49,7 +52,9 @@ app.post('/logout', function(req, res) {
   }
 
 });
-app.get('/getServerTime');
+app.get('/getServerTime', function(req, res) {
+  res.send(Date.now());
+});
 
 /* End Team 12 */
 
