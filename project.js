@@ -87,7 +87,6 @@ function loadCommentary(req, res, book, chapter, verse) {
     var commentary = "";
 
     var book = book.replace('+', ' ');
-    console.log(book);
     var pool = connectToDb();
     var sql = "SELECT id, text FROM verse WHERE book = $1 AND chapter = $2 AND verse = $3;";
     pool.query(sql, [book, Number(chapter), Number(verse)], function(err, result) {
@@ -113,7 +112,7 @@ function loadCommentary(req, res, book, chapter, verse) {
             for (i = 0; i < result.rows.length; i++) {
                 commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`;
                 if (req.session.username == result.rows[i].username) {
-                    commentary += `<form action='/editVerse' method='GET'><input id='id' name='id' type='hidden' value=${result.rows[i].id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteVerse' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
+                    commentary += `<form action='/editComment' method='GET'><input id='id' name='id' type='hidden' value=${result.rows[i].id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteComment' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
                 }
             }     
             details = {id: id, verse: verse, text: text, commentary: commentary}
@@ -197,12 +196,6 @@ function insertVerse(req, res) {
 function validateLogin(req, res) {
     var username = req.body.username;
     var password = req.body.password;
-
-  
-    bcrypt.hash(password, 10, function(err, hash) {
-        console.log(hash);
-    
-    });
   
     var pool = connectToDb();
     var sql = 'SELECT password FROM member WHERE username = $1';
@@ -219,7 +212,6 @@ function validateLogin(req, res) {
             if (result) {
                 req.session.username = username;
             }
-            console.log(req.session)
             return res.redirect('/school');
         });
     });
