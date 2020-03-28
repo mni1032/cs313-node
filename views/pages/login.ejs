@@ -6,8 +6,10 @@
     <title>Login</title>
 </head>
 <body>
-    <form action="/validateLogin">
+    <form action="/validateLogin" method="POST">
+        <label for="username">Username</label>
         <input id="username" name="username" type="text" required/>
+        <label for="password">Password</label>
         <input id="password" name="password" type="password" required/>
         <input id="submit" name="submit" type="submit" value="Log in"/> 
     </form>

@@ -201,8 +201,9 @@ function validateLogin(req, res) {
     var sql = 'SELECT password FROM member WHERE username = $1';
     pool.query(sql, [username], function(err, result) {
         if (err) {
-            console.log("in the error for pool");
-            res.status(500).json({success: false, data: err});
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
         }
     
         var hash = result.rows[0].password
