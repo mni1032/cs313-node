@@ -11,7 +11,7 @@
     <p><%= text %></p>
     <form action="/editVerse" method="GET">
         <input id="verseId" name="verseId" type="hidden" value=<%= id %>/>
-    <% if (edit == true) { %>
+    <% if (locals.edit) { %>
         <input id="editVerse" name="editVerse" type="submit" value="Edit verse"/> 
     <% } %>
     </form>
