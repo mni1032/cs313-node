@@ -100,7 +100,7 @@ function loadCommentary(res, book, chapter, verse) {
         text = result.rows[0].text;
         verse = `${book} ${chapter}:${verse}`;     
         
-        var sql = "SELECT m.username, TO_CHAR(co.create_date, 'Month DD, YYYY') AS date, ci.title, co.text FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id WHERE verse_id = $1;";
+        var sql = "SELECT m.username, TO_CHAR(co.create_date, 'Month DD, YYYY') AS date, ci.title, ci.other, co.text, s.source_type FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id INNER JOIN source_type s ON ci.source_type_id = s.id WHERE verse_id = $1;";
         pool.query(sql, [Number(id)], function(err, result) {
             if (err) {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -110,7 +110,7 @@ function loadCommentary(res, book, chapter, verse) {
     
             var i;
             for (i = 0; i < result.rows.length; i++) {
-                commentary += `<p>${result.rows[i].text} (${result.rows[i].title})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`
+                commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`
             }     
             details = {verse: verse, text: text, commentary: commentary}
             res.render("pages/commentary", details)
