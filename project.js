@@ -234,7 +234,7 @@ function loadVerseDetails(req, res) {
         }
         else {
             var params = {id: req.query.verseId, book: result.rows[0].book, chapter: result.rows[0].chapter, verse: result.rows[0].verse, text: result.rows[0].text};
-            res.render('/pages/editVerse', params);
+            res.render('pages/editVerse', params);
         }
     });
 }
