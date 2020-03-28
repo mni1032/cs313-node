@@ -111,7 +111,10 @@ function loadCommentary(req, res, book, chapter, verse) {
     
             var i;
             for (i = 0; i < result.rows.length; i++) {
-                commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`
+                commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`;
+                if (req.session.username == result.rows[i].username) {
+                    commentary += `<form action='/editVerse' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteVerse' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
+                }
             }     
             details = {id: id, verse: verse, text: text, commentary: commentary}
             if (req.session.username) {
