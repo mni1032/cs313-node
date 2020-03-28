@@ -239,4 +239,19 @@ function loadVerseDetails(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails}
+function updateVerse(req, res) {
+    var pool = connectToDb();
+    var sql = "UPDATE verse SET book = $1, chapter = $2, verse = $3, text = $4 WHERE id = $5;"
+
+    pool.query(sql, [req.body.book, Number(req.body.chapter), Number(req.body.verse), req.body.text, Number(req.body.id)], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+        var url = '/commentary?book=' + req.body.book + '&chapter=' + req.body.chapter + '&verse=' + req.body.verse;
+        return res.redirect(url);
+    });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse}
