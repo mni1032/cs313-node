@@ -197,23 +197,24 @@ function validateLogin(req, res) {
     
     });
   
-  var pool = connectToDb();
-  var sql = 'SELECT password FROM member WHERE username = $1';
-  pool.query(sql, [username], function(err, result) {
-    if (err) {
-      console.log("in the error for pool");
-      res.status(500).json({success: false, data: err});
-    }
+    var pool = connectToDb();
+    var sql = 'SELECT password FROM member WHERE username = $1';
+    pool.query(sql, [username], function(err, result) {
+        if (err) {
+            console.log("in the error for pool");
+            res.status(500).json({success: false, data: err});
+        }
     
-    var hash = result.rows[0].password
+        var hash = result.rows[0].password
     
-    bcrypt.compare(password, hash, function(err, result) {
-      if (result) {
-        req.session.username = username;
-      }
-      return res.redirect('school');
+        bcrypt.compare(password, hash, function(err, result) {
+            if (result) {
+                req.session.username = username;
+            }
+            console.log(req.session)
+            return res.redirect('school');
+        });
     });
-  });
 }
 
 module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin}
