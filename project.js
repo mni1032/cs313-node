@@ -214,7 +214,7 @@ function validateLogin(req, res) {
                 req.session.username = username;
             }
             console.log(req.session)
-            return res.redirect('school');
+            return res.redirect('/school');
         });
     });
 }

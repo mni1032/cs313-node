@@ -25,18 +25,33 @@ app.use(session({
 }));
 
 //project routes
+//main pages
 app.get('/school', project.loadBooks);
 app.get('/commentary', (req, res) => project.loadCommentary(res, req.query.book, req.query.chapter, req.query.verse));
-app.get('/addComment', project.loadBooksForComment);
-app.get('/addVerse', (req, res) => res.render('pages/addVerse'));
 
+//ajax calls
 app.get('/chapters', (req, res) => project.loadChapters(res, req.query.book));
 app.get('/verses', (req, res) => project.loadVerses(res, req.query.book, req.query.chapter));
-app.post('/insertComment', project.insertComment);
-app.post('/insertVerse', project.insertVerse);
 
+//login handling
 app.get('/login', (req, res) => res.render('pages/login'))
 app.post('/validateLogin', project.validateLogin);
+
+//for members only
+var authorize = function(req, res, next) {
+  if (req.session.username) {
+    next();
+  }
+  else {
+    res.redirect('/login');
+  }
+}
+
+app.use(authorize);
+app.get('/addComment', project.loadBooksForComment);
+app.get('/addVerse', (req, res) => res.render('pages/addVerse'));
+app.post('/insertComment', project.insertComment);
+app.post('/insertVerse', project.insertVerse);
 
 //postal rate calculator routes
 app.get('/postCalcForm', function(req, res) {
