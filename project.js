@@ -187,4 +187,33 @@ function insertVerse(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse}
+function validateLogin(req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+
+  
+    bcrypt.hash(password, 10, function(err, hash) {
+        console.log(hash);
+    
+    });
+  
+  var pool = connectToDb();
+  var sql = 'SELECT password FROM member WHERE username = $1';
+  pool.query(sql, [username], function(err, result) {
+    if (err) {
+      console.log("in the error for pool");
+      res.status(500).json({success: false, data: err});
+    }
+    
+    var hash = result.rows[0].password
+    
+    bcrypt.compare(password, hash, function(err, result) {
+      if (result) {
+        req.session.username = username;
+      }
+      return res.redirect('school');
+    });
+  });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin}

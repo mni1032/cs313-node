@@ -29,6 +29,8 @@ app.get('/verses', (req, res) => project.loadVerses(res, req.query.book, req.que
 app.post('/insertComment', project.insertComment);
 app.post('/insertVerse', project.insertVerse);
 
+app.post('/login', project.validateLogin);
+
 //postal rate calculator routes
 app.get('/postCalcForm', function(req, res) {
   res.sendFile('postCalcForm.html', {root: __dirname + '/public'});
@@ -63,41 +65,6 @@ function connectToDb() {
   const pool = new Pool({connectionString: connectionString});
   return pool;
 }
-
-app.post('/login', function(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-
-  
-  bcrypt.hash(password, 10, function(err, hash) {
-    console.log(hash);
-    
-  });
-  
-  var id = null;
-  var pool = connectToDb();
-  var params = [username];
-  var sql = 'SELECT password FROM member WHERE username = $1';
-  pool.query(sql, params, function(err, result) {
-    if (err) {
-      console.log("in the error for pool");
-      res.status(500).json({success: false, data: err});
-    }
-    
-    
-    var hash = result.rows[0].password
-    
-    bcrypt.compare(password, hash, function(err, result) {
-      var json = {success: false};
-      if (result) {
-        json.success = true; 
-        req.session.username = username;
-        req.session.password = password;
-      }
-      res.json(json);
-    });
-  });  
-});
 
 app.post('/logout', function(req, res) {
   var json = {success: false};
