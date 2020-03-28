@@ -101,7 +101,7 @@ function loadCommentary(req, res, book, chapter, verse) {
         text = result.rows[0].text;
         verse = `${book} ${chapter}:${verse}`;     
         
-        var sql = "SELECT m.username, TO_CHAR(co.create_date, 'Month DD, YYYY') AS date, ci.title, ci.other, co.text, s.source_type FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id INNER JOIN source_type s ON ci.source_type_id = s.id WHERE verse_id = $1;";
+        var sql = "SELECT co.id, m.username, TO_CHAR(co.create_date, 'Month DD, YYYY') AS date, ci.title, ci.other, co.text, s.source_type FROM comment co INNER JOIN member m ON co.author_id = m.id INNER JOIN citation ci ON co.citation_id = ci.id INNER JOIN source_type s ON ci.source_type_id = s.id WHERE verse_id = $1;";
         pool.query(sql, [Number(id)], function(err, result) {
             if (err) {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -113,7 +113,7 @@ function loadCommentary(req, res, book, chapter, verse) {
             for (i = 0; i < result.rows.length; i++) {
                 commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`;
                 if (req.session.username == result.rows[i].username) {
-                    commentary += `<form action='/editVerse' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteVerse' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
+                    commentary += `<form action='/editVerse' method='GET'><input id='id' name='id' type='hidden' value=${result.rows[i].id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteVerse' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
                 }
             }     
             details = {id: id, verse: verse, text: text, commentary: commentary}
@@ -257,4 +257,21 @@ function updateVerse(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse}
+function loadCommentDetails(req, res) {
+    var pool = connectToDb();
+    var sql = "SELECT co.text, ci.author_first, ci.author_last, ci.title, ci.other FROM comment co INNER JOIN citation ci ON co.citation_id = ci.id WHERE co.id = $1;";
+
+    pool.query(sql, [Number(req.query.id)], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+        else {
+            var params = {id: req.query.id, title: result.rows[0].title, author_first: result.rows[0].author_first, author_last: result.rows[0].author_last, other: result.rows[0].other, text: result.rows[0].text};
+            res.render('pages/editComment', params);
+        }
+    });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse, loadCommentDetails: loadCommentDetails}
