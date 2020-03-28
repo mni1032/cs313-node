@@ -25,25 +25,26 @@
             <option value="" selected disabled>--select verse--</option>
         </select>
         <br/>
-        <label for="title">Source title</labe>
-        <input id="title" name="title" type="text"/>
+        <input id="bookType" name="type" type="radio" value="1" disabled/>
+        <label for="bookType">Book</label> 
+        <input id="talkType" name="type" type="radio" value="2" disabled/>
+        <label for="talkType">Conference talk</label> 
+        <input id="articleType" name="type" type="radio" value="3" disabled/>
+        <label for="articleType">Article</label> 
+        <br/>
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" disabled/>
         <br/>    
         <label for="author_first">Author first</label>
-        <input id="author_first" name="author_first" type="text"/>
+        <input id="author_first" name="author_first" type="text" disabled/>
         <label for="author_last">Author last</label>
-        <input id="author_last" name="author_last" type="text"/>
+        <input id="author_last" name="author_last" type="text" disabled/>
         <br/>
-        <input id="book" name="type" type="radio" value="1"/>
-        <label for="book">Book</label> 
-        <input id="talk" name="type" type="radio" value="2"/>
-        <label for="talk">Talk</label> 
-        <input id="article" name="type" type="radio" value="3"/>
-        <label for="article">Article</label> 
-        <br/>
-        <textarea id="text" name="text" rows="20" cols="100"></textarea>
+        <div id="otherHolder"></div>
+        <textarea id="text" name="text" rows="20" cols="100" disabled></textarea>
         <br/>    
         <input id="submit" name="submit" type="submit" value="Add comment" disabled/>
     </form>
-    <script type="text/javascript" src="/javascript/updateForm.js"></script>
+    <script type="text/javascript" src="/javascript/updateCommentForm.js"></script>
 </body>
 </html>

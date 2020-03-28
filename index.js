@@ -3,6 +3,7 @@ const path = require('path');
 const Pool = require('pg-pool');
 const PORT = process.env.PORT || 5000;
 const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 var project = require('./project.js');
 var postCalc = require('./postCalc.js');
@@ -67,25 +68,34 @@ app.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
+  
+  bcrypt.hash(password, 10, function(err, hash) {
+    console.log(hash);
+    
+  });
+  
   var id = null;
   var pool = connectToDb();
-  var params = [username, password];
-  var sql = 'SELECT id FROM member WHERE username = $1 AND password = $2';
+  var params = [username];
+  var sql = 'SELECT password FROM member WHERE username = $1';
   pool.query(sql, params, function(err, result) {
     if (err) {
       console.log("in the error for pool");
       res.status(500).json({success: false, data: err});
     }
-
-    id = result.rows[0].id;
-    console.log("id: " + id);
-    var json = {success: false};
-    if (id != null) {
-      json.success = true; 
-      req.session.username = username;
-      req.session.password = password;
-    }
-    res.json(json);
+    
+    
+    var hash = result.rows[0].password
+    
+    bcrypt.compare(password, hash, function(err, result) {
+      var json = {success: false};
+      if (result) {
+        json.success = true; 
+        req.session.username = username;
+        req.session.password = password;
+      }
+      res.json(json);
+    });
   });  
 });
 
