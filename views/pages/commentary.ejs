@@ -9,9 +9,12 @@
     <% include ../partials/header %>
     <h2><%= verse %></h2>
     <p><%= text %></p>
+    <form action="/editVerse" method="GET">
+        <input id="verseId" name="verseId" type="hidden" value=<%= id %>/>
     <% if (edit == true) { %>
-        <input id="editVerse" name="editVerse" type="button" value="Edit verse"/> 
+        <input id="editVerse" name="editVerse" type="submit" value="Edit verse"/> 
     <% } %>
+    </form>
     <div><%- commentary %></div>
 </body>
 </html>

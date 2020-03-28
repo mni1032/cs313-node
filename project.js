@@ -113,7 +113,7 @@ function loadCommentary(req, res, book, chapter, verse) {
             for (i = 0; i < result.rows.length; i++) {
                 commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`
             }     
-            details = {verse: verse, text: text, commentary: commentary}
+            details = {id: id, verse: verse, text: text, commentary: commentary}
             if (req.session.username) {
                 details.edit = true;
             }
