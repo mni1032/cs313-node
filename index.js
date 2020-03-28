@@ -52,6 +52,9 @@ app.get('/addComment', project.loadBooksForComment);
 app.get('/addVerse', (req, res) => res.render('pages/addVerse'));
 app.post('/insertComment', project.insertComment);
 app.post('/insertVerse', project.insertVerse);
+
+app.get('/editVerse', project.loadVerseDetails);
+
 app.get('/logout', function(req, res) {
   req.session.destroy();
   res.redirect('/school');

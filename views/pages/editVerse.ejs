@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit verse</title>
+</head>
+<body>
+    <form action="/updateVerse" method="POST">
+        <input id="id" name="id" type="hidden" value=<%= id %>>
+        <input id="book" name="book" type="text" value=<%= book %>> 
+        <input id="chapter" name="chapter" type="text" value=<%= chapter %>> 
+        <input id="verse" name="verse" type="text" value=<%= verse %>> 
+        <textarea id="text" name="text" rows="20" cols="100"><%= text %></textarea>
+    </form>
+</body>
+</html>

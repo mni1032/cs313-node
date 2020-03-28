@@ -222,4 +222,21 @@ function validateLogin(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin}
+function loadVerseDetails(req, res) {
+    var pool = connectToDb();
+    var sql = "SELECT book, chapter, verse, text FROM verse WHERE id = $1;";
+
+    pool.query(sql, [Number(req.query.verseId)], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+        else {
+            var params = {id: req.query.verseId, book: result.rows[0].book, chapter: result.rows[0].chapter, verse: result.rows[0].verse, text: result.rows[0].text};
+            res.render('/pages/editVerse', params);
+        }
+    });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails}
