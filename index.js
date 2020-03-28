@@ -3,7 +3,6 @@ const path = require('path');
 const Pool = require('pg-pool');
 const PORT = process.env.PORT || 5000;
 const session = require('express-session');
-const bcrypt = require('bcrypt');
 
 var project = require('./project.js');
 var postCalc = require('./postCalc.js');
@@ -51,41 +50,5 @@ var logRequest = function (req, res, next) {
   next();
 }
 app.use(logRequest);
-
-
-var verifyLogin = function (req, res, next) {
-  if (req.session.username) {
-    next();
-  } else {
-    res.writeHead(401, {"Content-Type": "application/json"});
-    res.write(JSON.stringify({status: 401, success: false}));
-    res.end();
-  }  
-}
-
-function connectToDb() {
-  const connectionString = "postgres://mohnqqmhlyxftp:3656ef63652e5d369a0bcc7391b883a8deeee9a2e9bb32a63174683c6b08f626@ec2-23-22-156-110.compute-1.amazonaws.com:5432/d5ps07nkfvc3dm?ssl=true";
-  const pool = new Pool({connectionString: connectionString});
-  return pool;
-}
-
-app.post('/logout', function(req, res) {
-  var json = {success: false};
-  if (req.session.username) {
-    req.session.destroy();
-    json.success = true; 
-  }
-  res.json(json);
-
-});
-
-app.use(verifyLogin);
-app.get('/getServerTime', function(req, res) {
-  var time = new Date();
-  var result = {success: true, time: time};
-  res.json(result);
-});
-
-/* End Team 12 */
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
