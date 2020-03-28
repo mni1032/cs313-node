@@ -142,7 +142,7 @@ function loadBooksForComment(req, res) {
 function insertComment(req, res) {
     var pool = connectToDb();
     var sql = "INSERT INTO citation (author_first, author_last, title, other, source_type_id) VALUES ($1, $2, $3, $4, $5) RETURNING id;";
-    pool.query(sql, [req.body.author_first, req.body.author_last, req.body.title, '', req.body.type], function(err, result) {
+    pool.query(sql, [req.body.author_first, req.body.author_last, req.body.title, req.body.other, req.body.type], function(err, result) {
         if (err) {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write("ERROR IN QUERY");

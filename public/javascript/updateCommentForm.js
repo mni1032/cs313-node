@@ -5,13 +5,13 @@ function fillOtherHolder() {
     $('#text').removeAttr("disabled");
     $('#submit').removeAttr("disabled");
     if ($("#bookType").is(':checked')) {
-        $("#otherHolder").html("<label for='other'>Pages</label><input id='other' name='other' type='text'/>");
+        $("#otherHolder").html("<label for='other'>Pages</label><input id='other' name='other' type='text' required/>");
     }
     else if ($("#talkType").is(':checked')) {
-        $("#otherHolder").html("<label for='other'>ChurchOfJesusChrist.org URL</label><input id='other' name='other' type='text'/>");
+        $("#otherHolder").html("<label for='other'>ChurchOfJesusChrist.org URL</label><input id='other' name='other' type='text' required/>");
     }
     else if ($("#articleType").is(':checked')) {
-        $("#otherHolder").html("<label for='other'>Magazine/Journal/Website</label><input id='other' name='other' type='text'/>");
+        $("#otherHolder").html("<label for='other'>Magazine/Journal/Website</label><input id='other' name='other' type='text' required/>");
     }
 }
 

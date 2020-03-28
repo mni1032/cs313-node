@@ -25,7 +25,7 @@
             <option value="" selected disabled>--select verse--</option>
         </select>
         <br/>
-        <input id="bookType" name="type" type="radio" value="1" disabled/>
+        <input id="bookType" name="type" type="radio" value="1" disabled required/>
         <label for="bookType">Book</label> 
         <input id="talkType" name="type" type="radio" value="2" disabled/>
         <label for="talkType">Conference talk</label> 
@@ -33,15 +33,15 @@
         <label for="articleType">Article</label> 
         <br/>
         <label for="title">Title</label>
-        <input id="title" name="title" type="text" disabled/>
+        <input id="title" name="title" type="text" disabled required/>
         <br/>    
         <label for="author_first">Author first</label>
-        <input id="author_first" name="author_first" type="text" disabled/>
+        <input id="author_first" name="author_first" type="text" disabled required/>
         <label for="author_last">Author last</label>
-        <input id="author_last" name="author_last" type="text" disabled/>
+        <input id="author_last" name="author_last" type="text" disabled required/>
         <br/>
         <div id="otherHolder"></div>
-        <textarea id="text" name="text" rows="20" cols="100" disabled></textarea>
+        <textarea id="text" name="text" rows="20" cols="100" disabled required></textarea>
         <br/>    
         <input id="submit" name="submit" type="submit" value="Add comment" disabled/>
     </form>
