@@ -27,7 +27,7 @@ app.use(session({
 //project routes
 //main pages
 app.get('/school', project.loadBooks);
-app.get('/commentary', (req, res) => project.loadCommentary(res, req.query.book, req.query.chapter, req.query.verse));
+app.get('/commentary', (req, res) => project.loadCommentary(req, res, req.query.book, req.query.chapter, req.query.verse));
 
 //ajax calls
 app.get('/chapters', (req, res) => project.loadChapters(res, req.query.book));

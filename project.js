@@ -80,7 +80,7 @@ function loadVerses(res, bookURI, chapter) {
     });     
 }
 
-function loadCommentary(res, book, chapter, verse) {
+function loadCommentary(req, res, book, chapter, verse) {
     var id;
     var text;
     var verse;
@@ -114,6 +114,9 @@ function loadCommentary(res, book, chapter, verse) {
                 commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`
             }     
             details = {verse: verse, text: text, commentary: commentary}
+            if (req.session.username) {
+                details.edit = true;
+            }
             res.render("pages/commentary", details)
         });   
     });     

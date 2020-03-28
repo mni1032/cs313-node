@@ -9,6 +9,9 @@
     <% include ../partials/header %>
     <h2><%= verse %></h2>
     <p><%= text %></p>
+    <% if (edit == true) { %>
+        <input id="editVerse" name="editVerse" type="button" value="Edit verse"/> 
+    <% } %>
     <div><%- commentary %></div>
 </body>
 </html>
