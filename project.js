@@ -112,7 +112,7 @@ function loadCommentary(req, res, book, chapter, verse) {
             for (i = 0; i < result.rows.length; i++) {
                 commentary += `<p>${result.rows[i].text} (${result.rows[i].title}, ${result.rows[i].other})</p><p>Posted by ${result.rows[i].username} on ${result.rows[i].date}</p>`;
                 if (req.session.username == result.rows[i].username) {
-                    commentary += `<form action='/editComment' method='GET'><input id='id' name='id' type='hidden' value=${result.rows[i].id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteComment' method='GET'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
+                    commentary += `<form action='/editComment' method='GET'><input id='id' name='id' type='hidden' value=${result.rows[i].id}><input id='editComment' name='editComment' type='submit' value='Edit comment'></form><form action='/deleteComment' method='POST'><input id='id' name='id' type='hidden' value=${id}><input id='deleteComment' name='deleteComment' type='submit' value='Delete comment'></form>`;
                 }
             }     
             details = {id: id, verse: verse, text: text, commentary: commentary}
@@ -288,4 +288,27 @@ function updateComment(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse, loadCommentDetails: loadCommentDetails, updateComment: updateComment}
+function deleteComment(req, res) {
+    var pool = connectToDb();
+    var sql = "DELETE FROM comment WHERE id = $1 RETURNING citation_id;"
+
+    pool.query(sql, [req.body.id], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+
+        sql = "DELET FROM citation WHERE id = $1;";
+        pool.query(sql, [result.rows[0].citation_id], function(err, result) {
+            if (err) {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.write("ERROR IN QUERY");
+                res.end();
+            }
+            return res.redirect('/school');
+        });
+    });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse, loadCommentDetails: loadCommentDetails, updateComment: updateComment, deleteComment: deleteComment}
