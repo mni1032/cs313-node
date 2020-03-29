@@ -56,6 +56,7 @@ app.post('/insertVerse', project.insertVerse);
 app.get('/editVerse', project.loadVerseDetails);
 app.post('/updateVerse', project.updateVerse);
 app.get('/editComment', project.loadCommentDetails);
+app.post('/updateComment', project.updateComment)
 // app.get('/deleteComment', project.deleteComment);
 
 app.get('/logout', function(req, res) {

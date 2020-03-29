@@ -266,4 +266,26 @@ function loadCommentDetails(req, res) {
     });
 }
 
-module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse, loadCommentDetails: loadCommentDetails}
+function updateComment(req, res) {
+    var pool = connectToDb();
+    var sql = "UPDATE citation SET author_first = $1, author_last = $2, title = $3, other = $4 WHERE id = (SELECT citation_id FROM comment WHERE id = $5);"
+
+    pool.query(sql, [req.body.author_first, req.body.author_last, req.body.title, req.body.other, Number(req.body.id)], function(err, result) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write("ERROR IN QUERY");
+            res.end();
+        }
+        sql = "UPDATE comment SET text = $1 WHERE id = $2;";
+        pool.query(sql, [req.body.text, Number(req.body.id)], function(err, result) {
+            if (err) {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.write("ERROR IN QUERY");
+                res.end();
+            }
+            return res.redirect('/school');
+        })
+    });
+}
+
+module.exports = {loadBooks: loadBooks, loadChapters: loadChapters, loadVerses: loadVerses, loadCommentary: loadCommentary, loadBooksForComment: loadBooksForComment, insertComment: insertComment, insertVerse: insertVerse, validateLogin: validateLogin, loadVerseDetails: loadVerseDetails, updateVerse: updateVerse, loadCommentDetails: loadCommentDetails, updateComment: updateComment}
