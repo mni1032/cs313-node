@@ -299,7 +299,7 @@ function deleteComment(req, res) {
             res.end();
         }
 
-        sql = "DELET FROM citation WHERE id = $1;";
+        sql = "DELETE FROM citation WHERE id = $1;";
         pool.query(sql, [result.rows[0].citation_id], function(err, result) {
             if (err) {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
