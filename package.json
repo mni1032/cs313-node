@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "bootstrap": "^4.4.1",
     "ejs": "^2.7.4",
     "express": "^4.15.2",
     "express-session": "^1.17.0",
