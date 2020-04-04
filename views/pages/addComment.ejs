@@ -4,47 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add comment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
     <% include ../partials/header %>
-    <form action="/insertComment" method="POST">
-        <label for="book">Book</label>
-        <select id="book" name="book">
-            <option value="" selected disabled>--select book--</option>
-            <%- books %>
-        </select>
-        <br/>
-        <label for="chapter">Chapter</label>
-        <select id="chapter" name="chapter" disabled>
-            <option value="" selected disabled>--select chapter--</option>
-        </select>
-        <br/>
-        <label for="verse">Verse</label>
-        <select id="verse" name="verse" disabled>
-            <option value="" selected disabled>--select verse--</option>
-        </select>
-        <br/>
-        <input id="bookType" name="type" type="radio" value="1" disabled required/>
-        <label for="bookType">Book</label> 
-        <input id="talkType" name="type" type="radio" value="2" disabled/>
-        <label for="talkType">Conference talk</label> 
-        <input id="articleType" name="type" type="radio" value="3" disabled/>
-        <label for="articleType">Article</label> 
-        <br/>
-        <label for="title">Title</label>
-        <input id="title" name="title" type="text" disabled required/>
-        <br/>    
-        <label for="author_first">Author first</label>
-        <input id="author_first" name="author_first" type="text" disabled required/>
-        <label for="author_last">Author last</label>
-        <input id="author_last" name="author_last" type="text" disabled required/>
-        <br/>
-        <div id="otherHolder"></div>
-        <textarea id="text" name="text" rows="20" cols="100" disabled required></textarea>
-        <br/>    
-        <input id="submit" name="submit" type="submit" value="Add comment" disabled/>
-    </form>
+    <div class="container">
+        <form action="/insertComment" method="POST">
+            <label for="book">Book</label>
+            <select id="book" name="book">
+                <option value="" selected disabled>--select book--</option>
+                <%- books %>
+            </select>
+            <br/>
+            <label for="chapter">Chapter</label>
+            <select id="chapter" name="chapter" disabled>
+                <option value="" selected disabled>--select chapter--</option>
+            </select>
+            <br/>
+            <label for="verse">Verse</label>
+            <select id="verse" name="verse" disabled>
+                <option value="" selected disabled>--select verse--</option>
+            </select>
+            <br/>
+            <input id="bookType" name="type" type="radio" value="1" disabled required/>
+            <label for="bookType">Book</label> 
+            <input id="talkType" name="type" type="radio" value="2" disabled/>
+            <label for="talkType">Conference talk</label> 
+            <input id="articleType" name="type" type="radio" value="3" disabled/>
+            <label for="articleType">Article</label> 
+            <br/>
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" disabled required/>
+            <br/>    
+            <label for="author_first">Author first</label>
+            <input id="author_first" name="author_first" type="text" disabled required/>
+            <label for="author_last">Author last</label>
+            <input id="author_last" name="author_last" type="text" disabled required/>
+            <br/>
+            <div id="otherHolder"></div>
+            <textarea id="text" name="text" rows="20" cols="100" disabled required></textarea>
+            <br/>    
+            <input id="submit" name="submit" type="submit" value="Add comment" disabled/>
+        </form>
+    </div>
     <script type="text/javascript" src="/javascript/updateCommentForm.js"></script>
 </body>
 </html>

@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit verse</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <form action="/updateVerse" method="POST">
-        <input id="id" name="id" type="hidden" value=<%= id %>>
-        <input id="book" name="book" type="text" value=<%= book %>><br/>
-        <input id="chapter" name="chapter" type="text" value=<%= chapter %>><br/> 
-        <input id="verse" name="verse" type="text" value=<%= verse %>><br/> 
-        <textarea id="text" name="text" rows="20" cols="100"><%= text %></textarea><br/>
-        <input id="updateVerse" name="updateVerse" type="submit" value="Update verse"/>
-    </form>
+    <div class="container">
+        <form action="/updateVerse" method="POST">
+            <input id="id" name="id" type="hidden" value=<%= id %>>
+            <input id="book" name="book" type="text" value=<%= book %>><br/>
+            <input id="chapter" name="chapter" type="text" value=<%= chapter %>><br/> 
+            <input id="verse" name="verse" type="text" value=<%= verse %>><br/> 
+            <textarea id="text" name="text" rows="20" cols="100"><%= text %></textarea><br/>
+            <input id="updateVerse" name="updateVerse" type="submit" value="Update verse"/>
+        </form>
+    </div>
 </body>
 </html>

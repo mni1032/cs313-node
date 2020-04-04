@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit comment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <form action="/updateComment" method="POST">
-        <input id="id" name="id" type="hidden" value=<%= id %>>
-        <input id="title" name="title" type="title" value=<%= title %>><br/> 
-        <input id="author_first" name="author_first" type="text" value=<%= author_first %>> 
-        <input id="author_last" name="author_last" type="text" value=<%= author_last %>><br/> 
-        <input id="other" name="other" type="text" value=<%= other %>><br/>
-        <textarea id="text" name="text" rows="20" cols="100"><%= text %></textarea><br/>
-        <input id="updateComment" name="updateComment" type="submit" value="Update comment"/>
-    </form>
+    <div class="container">
+        <form action="/updateComment" method="POST">
+            <input id="id" name="id" type="hidden" value=<%= id %>>
+            <input id="title" name="title" type="title" value=<%= title %>><br/> 
+            <input id="author_first" name="author_first" type="text" value=<%= author_first %>> 
+            <input id="author_last" name="author_last" type="text" value=<%= author_last %>><br/> 
+            <input id="other" name="other" type="text" value=<%= other %>><br/>
+            <textarea id="text" name="text" rows="20" cols="100"><%= text %></textarea><br/>
+            <input id="updateComment" name="updateComment" type="submit" value="Update comment"/>
+        </form>
+    </div>
 </body>
 </html>

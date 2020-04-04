@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commentary</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <% include ../partials/header %>
-    <h2><%= verse %></h2>
-    <p><%= text %></p>
-    <form action="/editVerse" method="GET">
-        <input id="verseId" name="verseId" type="hidden" value=<%= id %>>
-    <% if (locals.edit) { %>
-        <input id="editVerse" name="editVerse" type="submit" value="Edit verse"/> 
-    <% } %>
-    </form>
-    <div><%- commentary %></div>
+    <div class="container">
+        <h2><%= verse %></h2>
+        <p><%= text %></p>
+        <form action="/editVerse" method="GET">
+            <input id="verseId" name="verseId" type="hidden" value=<%= id %>>
+        <% if (locals.edit) { %>
+            <input id="editVerse" name="editVerse" type="submit" value="Edit verse"/> 
+        <% } %>
+        </form>
+        <div><%- commentary %></div>
+    </div>
 </body>
 </html>
